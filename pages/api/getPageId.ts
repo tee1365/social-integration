@@ -6,15 +6,11 @@ type Data = {
   name: string;
 };
 
-const justinId = '17841401344868618'; // getAccountId
-const commentId = '17931935788847188'; // webhook
-
-const commentMention = async (userToken: string) => {
+const getPageId = async (userToken: string) => {
   const response = await fetch(
-    `${FB_GRAPH_URL}/${justinId}?fields=mentioned_comment.comment_id(${commentId}){timestamp,like_count,text,id,media{id,username}}&access_token=${userToken}`
+    `${FB_GRAPH_URL}/me/accounts?access_token=${userToken}`
   );
   const data = (await response.json()) as any;
-  console.log(data);
   if (!response.ok) {
     throw new Error('App access token failed');
   }
@@ -25,6 +21,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data = await commentMention(req.query.token as string);
+  const data = await getPageId(req.query.token as string);
   res.json(data);
 }

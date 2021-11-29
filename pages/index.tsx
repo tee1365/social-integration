@@ -9,7 +9,12 @@ const Home: NextPage = () => {
       console.log(res);
       if (res.status === 'connected') {
         fetch(
-          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/hello?token=${res.authResponse.accessToken}`
+          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/getPageId?token=${res.authResponse.accessToken}`
+        )
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+        fetch(
+          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/getAccountId?token=${res.authResponse.accessToken}`
         )
           .then((response) => response.json())
           .then((data) => console.log(data));

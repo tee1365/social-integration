@@ -34,11 +34,13 @@ export default async function handler(
             // will only ever contain one event, so we get index 0
             let webhook_event = body.entry[0].changes[0];
             console.log(webhook_event);
+            res.status(200);
             res.json(webhook_event);
           });
         }
       } else if (body.entry[0].messaging) {
         console.log(body.entry[0].messaging[0]);
+        res.status(200);
         res.json(body.entry[0].messaging[0]);
       }
     } else {
