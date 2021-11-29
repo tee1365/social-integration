@@ -5,16 +5,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "micro": "^9.3.4",
     "next": "12.0.4",
+    "ngrok": "^4.2.2",
+    "node-fetch": "^3.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {
+    "@types/facebook-js-sdk": "^3.3.5",
+    "@types/micro": "^7.3.6",
     "@types/node": "16.11.10",
     "@types/react": "17.0.36",
+    "@types/request": "^2.48.7",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
     "typescript": "4.5.2"
