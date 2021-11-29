@@ -81,9 +81,10 @@ const storyMention = async (userToken: string) => {
     `${FB_GRAPH_URL}/100973542427253/conversations?platform=instagram&user_id=5266727923343036&fields=participants&access_token=${userToken}`
   );
   const data = (await response.json()) as any;
-  if (!response.ok) {
-    throw new Error('App access token failed');
-  }
+  console.log(response);
+  // if (!response.ok) {
+  //   throw new Error('App access token failed');
+  // }
   return data;
 };
 
@@ -92,12 +93,12 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   // const appAccessToken = await getAppToken();
-  const pageAccessToken = await getPageAccessToken(req.query.token as string);
-  // console.log(appAccessToken, req.query.token as string);
-  // const user = await me(req.query.token as string);
-  // res.json(user);
-  const testRes = await storyMention(pageAccessToken);
-  console.log(testRes.data[0].participants);
+  // const pageAccessToken = await getPageAccessToken(req.query.token as string);
+  // // console.log(appAccessToken, req.query.token as string);
+  // // const user = await me(req.query.token as string);
+  // // res.json(user);
+  // const testRes = await storyMention(pageAccessToken);
+  // console.log(testRes.data[0].participants);
   // const scopes = await debugToken(appAccessToken, req.query.token as string);
   // res.json({ scopes } as any);
   // console.log(await getLongLivedUserAccessToken());

@@ -6,9 +6,12 @@ type Data = {
   name: string;
 };
 
+const justinId = '17841401344868618';
+const commentId = '17931935788847188';
+
 const commentMention = async (userToken: string) => {
   const response = await fetch(
-    `${FB_GRAPH_URL}/17841401344868618?fields=mentioned_comment.comment_id(17931935788847188){timestamp,like_count,text,id,media{id,username}}&access_token=${userToken}`
+    `${FB_GRAPH_URL}/${justinId}?fields=mentioned_comment.comment_id(${commentId}){timestamp,like_count,text,id,media{id,username}}&access_token=${userToken}`
   );
   const data = (await response.json()) as any;
   console.log(data);

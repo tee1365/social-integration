@@ -21,9 +21,29 @@ const Home: NextPage = () => {
       };
   };
 
-  const story = () => {};
+  const story = () => {
+    window.FB.getLoginStatus((res) => {
+      if (res.status === 'connected') {
+        fetch(
+          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/storyMention?token=${res.authResponse.accessToken}`
+        )
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      }
+    });
+  };
 
-  const comment = () => {};
+  const comment = () => {
+    window.FB.getLoginStatus((res) => {
+      if (res.status === 'connected') {
+        fetch(
+          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/commentMention?token=${res.authResponse.accessToken}`
+        )
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      }
+    });
+  };
 
   return (
     <div className={styles.container}>

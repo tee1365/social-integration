@@ -15,9 +15,9 @@ const getPageAccessToken = async (userToken: string) => {
   );
   const data = (await response.json()) as any;
   console.log(data);
-  if (!response.ok) {
-    throw new Error('App access token failed');
-  }
+  // if (!response.ok) {
+  //   throw new Error('App access token failed');
+  // }
   return data.access_token;
 };
 
@@ -26,9 +26,10 @@ const storyMention = async (userToken: string) => {
     `${FB_GRAPH_URL}/${page_id}/conversations?platform=instagram&user_id=${igsid}&fields=participants&access_token=${userToken}`
   );
   const data = (await response.json()) as any;
-  if (!response.ok) {
-    throw new Error('App access token failed');
-  }
+  console.log(data);
+  // if (!response.ok) {
+  //   throw new Error('App access token failed');
+  // }
   return data;
 };
 
@@ -38,6 +39,5 @@ export default async function handler(
 ) {
   const pageAccessToken = await getPageAccessToken(req.query.token as string);
   const testRes = await storyMention(pageAccessToken);
-  console.log(testRes.data[0].participants);
-  res.json(testRes);
+  res.json(testRes.data);
 }
