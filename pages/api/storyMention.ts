@@ -6,12 +6,13 @@ type Data = {
   name: string;
 };
 
-const page_id = '100973542427253'; // getPageId
+// const page_id = '100973542427253'; // getPageId
 const igsid = '5266727923343036'; // got from webhook
 
-const getPageAccessToken = async (userToken: string) => {
+const getPageAccessToken = async (userToken: string, pageId: string) => {
+  console.log(pageId);
   const response = await fetch(
-    `https://graph.facebook.com/${page_id}?fields=access_token&access_token=${userToken}`
+    `https://graph.facebook.com/${pageId}?fields=access_token&access_token=${userToken}`
   );
   const data = (await response.json()) as any;
   if (!response.ok) {
@@ -20,9 +21,9 @@ const getPageAccessToken = async (userToken: string) => {
   return data.access_token;
 };
 
-const storyMention = async (userToken: string) => {
+const storyMention = async (userToken: string, pageId: string) => {
   const response = await fetch(
-    `${FB_GRAPH_URL}/${page_id}/conversations?platform=instagram&user_id=${igsid}&fields=participants&access_token=${userToken}`
+    `${FB_GRAPH_URL}/${pageId}/conversations?platform=instagram&user_id=${igsid}&fields=participants&access_token=${userToken}`
   );
   const data = (await response.json()) as any;
   if (!response.ok) {
@@ -35,7 +36,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const pageAccessToken = await getPageAccessToken(req.query.token as string);
-  const testRes = await storyMention(pageAccessToken);
+  const pageAccessToken = await getPageAccessToken(
+    req.query.token as string,
+    req.query.pageId as string
+  );
+  const testRes = await storyMention(
+    pageAccessToken,
+    req.query.pageId as string
+  );
   res.json(testRes.data);
 }

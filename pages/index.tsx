@@ -1,23 +1,28 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { NGROK_URL } from '../constants';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  const login = () => {
-    window.FB.login((res) => {
+  let pageId: string;
+  let accountId: string;
+  const login = async () => {
+    window.FB.login(async (res) => {
       console.log(res);
       if (res.status === 'connected') {
-        fetch(
-          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/getPageId?token=${res.authResponse.accessToken}`
-        )
-          .then((response) => response.json())
-          .then((data) => console.log(data));
-        fetch(
-          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/getAccountId?token=${res.authResponse.accessToken}`
-        )
-          .then((response) => response.json())
-          .then((data) => console.log(data));
+        const pageIdRes = await fetch(
+          `${NGROK_URL}/api/getPageId?token=${res.authResponse.accessToken}`
+        );
+        const pageIdObj = await pageIdRes.json();
+        pageId = pageIdObj.data[0].id;
+        const accountIdRes = await fetch(
+          `${NGROK_URL}/api/getAccountId?pageId=${pageId}&token=${res.authResponse.accessToken}`
+        );
+        const accountIdObj = await accountIdRes.json();
+        accountId = accountIdObj.instagram_business_account.id;
+        console.log(pageIdObj, accountIdObj);
+        console.log(pageId, accountId);
       }
     }),
       {
@@ -27,25 +32,25 @@ const Home: NextPage = () => {
   };
 
   const story = () => {
-    window.FB.getLoginStatus((res) => {
+    window.FB.getLoginStatus(async (res) => {
       if (res.status === 'connected') {
-        fetch(
-          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/storyMention?token=${res.authResponse.accessToken}`
-        )
-          .then((response) => response.json())
-          .then((data) => console.log(data));
+        const storyRes = await fetch(
+          `${NGROK_URL}/api/storyMention?pageId=${pageId}&token=${res.authResponse.accessToken}`
+        );
+        const storyObj = await storyRes.json();
+        console.log(storyObj);
       }
     });
   };
 
   const comment = () => {
-    window.FB.getLoginStatus((res) => {
+    window.FB.getLoginStatus(async (res) => {
       if (res.status === 'connected') {
-        fetch(
-          `https://aa73-2406-e003-776-8701-581e-6226-2a2a-b584.ngrok.io/api/commentMention?token=${res.authResponse.accessToken}`
-        )
-          .then((response) => response.json())
-          .then((data) => console.log(data));
+        const commentRes = await fetch(
+          `${NGROK_URL}/api/commentMention?accountId=${accountId}&token=${res.authResponse.accessToken}`
+        );
+        const commentObj = await commentRes.json();
+        console.log(commentObj);
       }
     });
   };

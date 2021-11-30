@@ -6,8 +6,10 @@ type Data = {
   name: string;
 };
 
-const getAccountId = async (userToken: string) => {
-  const response = await fetch(`${FB_GRAPH_URL}/me?access_token=${userToken}`);
+const getAccountId = async (userToken: string, pageId: string) => {
+  const response = await fetch(
+    `${FB_GRAPH_URL}/${pageId}?fields=instagram_business_account&access_token=${userToken}`
+  );
   const data = (await response.json()) as any;
   if (!response.ok) {
     throw new Error('App access token failed');
@@ -19,6 +21,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data = await getAccountId(req.query.token as string);
+  const data = await getAccountId(
+    req.query.token as string,
+    req.query.pageId as string
+  );
   res.json(data);
 }
