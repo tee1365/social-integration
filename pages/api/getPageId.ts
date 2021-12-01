@@ -1,16 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { FB_GRAPH_URL } from '../../constants';
-
-type Data = {
-  name: string;
-};
+import { PageIdResponse } from '../types';
 
 const getPageId = async (userToken: string) => {
   const response = await fetch(
     `${FB_GRAPH_URL}/me/accounts?access_token=${userToken}`
   );
-  const data = (await response.json()) as any;
+  const data = (await response.json()) as PageIdResponse;
+  console.log(data);
   if (!response.ok) {
     throw new Error('App access token failed');
   }
@@ -19,7 +17,7 @@ const getPageId = async (userToken: string) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   const data = await getPageId(req.query.token as string);
   res.json(data);
