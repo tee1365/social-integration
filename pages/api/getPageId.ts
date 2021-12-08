@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { FB_GRAPH_URL } from '../../constants';
-import { PageIdResponse } from '../types';
+import { PageIdResponse } from '../../types';
 
 const getPageId = async (userToken: string) => {
   const response = await fetch(

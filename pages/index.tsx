@@ -1,58 +1,74 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import { NGROK_URL } from '../constants';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  let pageId: string;
-  let accountId: string;
-  const login = async () => {
-    window.FB.login(async (res) => {
-      console.log(res);
-      if (res.status === 'connected') {
-        const pageIdRes = await fetch(
-          `${NGROK_URL}/api/getPageId?token=${res.authResponse.accessToken}`
-        );
-        const pageIdObj = await pageIdRes.json();
-        pageId = pageIdObj.data[0].id;
-        const accountIdRes = await fetch(
-          `${NGROK_URL}/api/getAccountId?pageId=${pageId}&token=${res.authResponse.accessToken}`
-        );
-        const accountIdObj = await accountIdRes.json();
-        accountId = accountIdObj.instagram_business_account.id;
-        console.log(pageIdObj, accountIdObj);
-        console.log(pageId, accountId);
-      }
-    }),
+  const [value, setValue] = useState('');
+  // let pageId: string;
+  // let accountId: string;
+  // const login = async () => {
+  //   window.FB.login(async (res) => {
+  //     console.log(res);
+  //     if (res.status === 'connected') {
+  //       const pageIdRes = await fetch(
+  //         `${NGROK_URL}/api/getPageId?token=${res.authResponse.accessToken}`
+  //       );
+  //       const pageIdObj = await pageIdRes.json();
+  //       pageId = pageIdObj.data[0].id;
+  //       const accountIdRes = await fetch(
+  //         `${NGROK_URL}/api/getAccountId?pageId=${pageId}&token=${res.authResponse.accessToken}`
+  //       );
+  //       const accountIdObj = await accountIdRes.json();
+  //       accountId = accountIdObj.instagram_business_account.id;
+  //       console.log(pageIdObj, accountIdObj);
+  //       console.log(pageId, accountId);
+  //     }
+  //   }),
+  //     {
+  //       scope:
+  //         'public_profile,pages_show_list,business_management,pages_messaging,instagram_basic,instagram_manage_comments,instagram_content_publish,instagram_manage_messages,pages_read_engagement,pages_manage_metadata',
+  //     };
+  // };
+
+  // const story = () => {
+  //   window.FB.getLoginStatus(async (res) => {
+  //     if (res.status === 'connected') {
+  //       const storyRes = await fetch(
+  //         `${NGROK_URL}/api/storyMention?pageId=${pageId}&token=${res.authResponse.accessToken}`
+  //       );
+  //       const storyObj = await storyRes.json();
+  //       console.log(storyObj);
+  //     }
+  //   });
+  // };
+
+  // const comment = () => {
+  //   window.FB.getLoginStatus(async (res) => {
+  //     if (res.status === 'connected') {
+  //       const commentRes = await fetch(
+  //         `${NGROK_URL}/api/commentMention?accountId=${accountId}&token=${res.authResponse.accessToken}`
+  //       );
+  //       const commentObj = await commentRes.json();
+  //       console.log(commentObj);
+  //     }
+  //   });
+  // };
+
+  const handleOnSubmit = async () => {
+    const res = await fetch(
+      'https://fec0-2406-e003-776-8701-342a-397d-3059-ec48.ngrok.io/social/igUsername',
       {
-        scope:
-          'public_profile,pages_show_list,business_management,pages_messaging,instagram_basic,instagram_manage_comments,instagram_content_publish,instagram_manage_messages,pages_read_engagement,pages_manage_metadata',
-      };
-  };
-
-  const story = () => {
-    window.FB.getLoginStatus(async (res) => {
-      if (res.status === 'connected') {
-        const storyRes = await fetch(
-          `${NGROK_URL}/api/storyMention?pageId=${pageId}&token=${res.authResponse.accessToken}`
-        );
-        const storyObj = await storyRes.json();
-        console.log(storyObj);
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: value }),
       }
-    });
-  };
-
-  const comment = () => {
-    window.FB.getLoginStatus(async (res) => {
-      if (res.status === 'connected') {
-        const commentRes = await fetch(
-          `${NGROK_URL}/api/commentMention?accountId=${accountId}&token=${res.authResponse.accessToken}`
-        );
-        const commentObj = await commentRes.json();
-        console.log(commentObj);
-      }
-    });
+    );
+    console.log(await res.json());
   };
 
   return (
@@ -67,9 +83,14 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-        <button onClick={() => login()}>log in</button>
-        <button onClick={() => story()}>story mention</button>
-        <button onClick={() => comment()}>comment mention</button>
+        <input value={value} onChange={(e) => setValue(e.target.value)}></input>
+        <button
+          onClick={() => {
+            handleOnSubmit();
+          }}
+        >
+          submit
+        </button>
       </main>
 
       <footer className={styles.footer}>

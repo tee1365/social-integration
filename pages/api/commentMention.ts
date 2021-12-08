@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { FB_GRAPH_URL } from '../../constants';
-import { CommentResponse } from '../types';
+import { CommentResponse } from '../../types';
 
 // const account_Id = '17841401344868618'; // getAccountId
 const commentId = '17931935788847188'; // webhook

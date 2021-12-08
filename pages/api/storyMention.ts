@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { FB_GRAPH_URL } from '../../constants';
-import { PageAccessTokenResponse, StoryResponse } from '../types';
+import { PageAccessTokenResponse, StoryResponse } from '../../types';
 
 // const page_id = '100973542427253'; // getPageId
 const igsid = '5266727923343036'; // got from webhook

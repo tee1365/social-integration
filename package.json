@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ngrok": "ngrok http 3000"
+    "ngrok": "ngrok http 3001"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -16,6 +16,7 @@
     "node-fetch": "^3.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-social-login": "^3.4.14",
     "request": "^2.88.2"
   },
   "devDependencies": {
