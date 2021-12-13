@@ -46,6 +46,7 @@ const Home: NextPage = () => {
       body: JSON.stringify({ username: username, orgName: orgName }),
     });
     console.log(await res.json());
+    setUsername('');
   };
 
   const handleOrgNameSubmit = async () => {
@@ -57,6 +58,7 @@ const Home: NextPage = () => {
       body: JSON.stringify({ orgName: orgName }),
     });
     console.log(await res.json());
+    setOrgName('');
   };
 
   return (
@@ -75,6 +77,17 @@ const Home: NextPage = () => {
         <button onClick={() => login('org2')}>org2</button>
         <button onClick={() => logout()}>logout</button>
         <input
+          value={orgName}
+          onChange={(e) => setOrgName(e.target.value)}
+        ></input>
+        <button
+          onClick={() => {
+            handleOrgNameSubmit();
+          }}
+        >
+          org name
+        </button>
+        <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         ></input>
@@ -91,18 +104,6 @@ const Home: NextPage = () => {
           }}
         >
           username for org2
-        </button>
-
-        <input
-          value={orgName}
-          onChange={(e) => setOrgName(e.target.value)}
-        ></input>
-        <button
-          onClick={() => {
-            handleOrgNameSubmit();
-          }}
-        >
-          org name
         </button>
       </main>
 
