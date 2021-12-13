@@ -7,10 +7,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     (window.fbAsyncInit = function () {
       window.FB.init({
-        appId: "417461823192941",
+        appId: '417461823192941',
         autoLogAppEvents: true,
         xfbml: true,
         version: 'v12.0',
+        status: false,
       });
       window.FB.AppEvents.logPageView();
     }),

@@ -1,8 +1,3 @@
-export const APP2_ID = process.env.APP2_ID;
-export const APP2_SECRET = process.env.APP2_SECRET;
-export const APP1_ID = process.env.APP1_ID;
-export const APP1_SECRET = process.env.APP1_SECRET;
 export const FB_GRAPH_URL = 'https://graph.facebook.com/v12.0';
-export const APP_USER_ID = process.env.APP_USER_ID;
 export const NGROK_URL =
-  'https://fec0-2406-e003-776-8701-342a-397d-3059-ec48.ngrok.io';
+  'https://94c9-2406-e003-725-4701-48bd-72fd-977f-ef1b.ngrok.io';
